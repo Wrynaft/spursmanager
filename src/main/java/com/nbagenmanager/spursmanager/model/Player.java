@@ -21,7 +21,9 @@ public class Player implements Serializable{
     private int age;
     private double height;
     private double weight;
-    private String position;
+    private boolean guard;
+    private boolean center;
+    private boolean forward;
     private double salary;
     private double points;
     private double rebound;
@@ -33,13 +35,15 @@ public class Player implements Serializable{
     
     public Player(){};
 
-    public Player(Long id, String name, int age, double height, double weight, String position, double salary, double points, double rebound, double assists, double steals, double blocks, int matchesPlayed, int contractLength) {
+    public Player(Long id, String name, int age, double height, double weight, boolean guard, boolean center, boolean forward, double salary, double points, double rebound, double assists, double steals, double blocks, int matchesPlayed, int contractLength) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.height = height;
         this.weight = weight;
-        this.position = position;
+        this.guard = guard;
+        this.center = center;
+        this.forward = forward;
         this.salary = salary;
         this.points = points;
         this.rebound = rebound;
@@ -49,6 +53,8 @@ public class Player implements Serializable{
         this.matchesPlayed = matchesPlayed;
         this.contractLength = contractLength;
     }
+
+   
 
     public Long getId() {
         return id;
@@ -74,9 +80,7 @@ public class Player implements Serializable{
         return weight;
     }
 
-    public String getPosition() {
-        return position;
-    }
+    
 
     public double getSalary() {
         return salary;
@@ -126,9 +130,31 @@ public class Player implements Serializable{
         this.weight = weight;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public boolean isGuard() {
+        return guard;
     }
+
+    public boolean isCenter() {
+        return center;
+    }
+
+    public boolean isForward() {
+        return forward;
+    }
+
+    public void setGuard(boolean guard) {
+        this.guard = guard;
+    }
+
+    public void setCenter(boolean center) {
+        this.center = center;
+    }
+
+    public void setForward(boolean forward) {
+        this.forward = forward;
+    }
+
+    
 
     public void setSalary(double salary) {
         this.salary = salary;
@@ -153,6 +179,9 @@ public class Player implements Serializable{
     public void setBlocks(double blocks) {
         this.blocks = blocks;
     }
+
+
+    
 
     public void setMatchesPlayed(int matchesPlayed) {
         this.matchesPlayed = matchesPlayed;

@@ -24,6 +24,16 @@ public class PlayerService {
     }
     
     public Player addPlayer(Player player){
+        if (playerRepo.findAll().size()>=15){
+            throw new ExceedTeamSizeException("Adding this player will exceed the maximum team size!");
+        }
+        double currentSalary=0;
+        for (Player players : playerRepo.findAll()){
+            currentSalary += players.getSalary();
+        }
+        if (currentSalary + player.getSalary() > 20000){
+            throw new ExceedSalaryException("Adding this player will exceed the salary cap!");
+        }
         return playerRepo.save(player);
     }
     
