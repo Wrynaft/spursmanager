@@ -8,8 +8,8 @@ package com.nbagenmanager.spursmanager.service;
  *
  * @author Ryan Chin
  */
-public class ExceedTeamSizeException extends RuntimeException{
-    public ExceedTeamSizeException(String message){
+public class TeamSizeException extends RuntimeException{
+    public TeamSizeException(String message){
         super(message);
     }
 }

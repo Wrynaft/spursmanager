@@ -7,6 +7,7 @@ package com.nbagenmanager.spursmanager;
 import com.nbagenmanager.spursmanager.model.Player;
 import com.nbagenmanager.spursmanager.service.PlayerService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,20 +44,45 @@ public class PlayerResource {
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
     
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateRoster(){
+        if (playerService.validateRoster())
+            return new ResponseEntity<String>(HttpStatus.OK);
+        else
+            return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+    }
+    
+    @GetMapping("/size")
+    public ResponseEntity<Integer> getSize(){
+        Integer size = playerService.getSize();
+        return new ResponseEntity<>(size, HttpStatus.OK);
+    }
+    
+    @GetMapping("/salary")
+    public ResponseEntity<Double> getSalary(){
+        Double salary = playerService.getSalary();
+        return new ResponseEntity<>(salary, HttpStatus.OK);
+    }
+    
     @PostMapping("/add")
-    public ResponseEntity<Player> addEmployee(@RequestBody Player player){
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player){
         Player newPlayer = playerService.addPlayer(player);
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
     
+    @PostMapping("/search")
+    public ResponseEntity<List<Player>> searchPlayers(@RequestBody Map<String, String> searchParams){
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+    
     @PutMapping("/update")
-    public ResponseEntity<Player> updateEmployee(@RequestBody Player player){
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player player){
         Player updatePlayer = playerService.updatePlayer(player);
         return new ResponseEntity<>(updatePlayer, HttpStatus.CREATED);
     }
     
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Player> updateEmployee(@PathVariable("id") Long id){
+    public ResponseEntity<Player> deletePlayer(@PathVariable("id") Long id){
         playerService.deletePlayer(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

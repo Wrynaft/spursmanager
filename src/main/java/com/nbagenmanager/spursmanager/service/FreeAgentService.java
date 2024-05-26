@@ -7,10 +7,12 @@ package com.nbagenmanager.spursmanager.service;
 import com.nbagenmanager.spursmanager.model.Player;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,8 +26,12 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class FreeAgentService {
-
-    public FreeAgentService() {
+    
+    private PlayerService playerService;
+    
+    @Autowired
+    public FreeAgentService(PlayerService playerService) {
+        this.playerService = playerService;
     }
         
     public List<Player> getFreeAgents() throws ParseException{
@@ -66,16 +72,7 @@ public class FreeAgentService {
             double weight = playerDetails.get("weight")==null ? 0 : Double.parseDouble(((String)playerDetails.get("weight")))* 0.45359237;
             weight = Math.floor(weight*100)/100;
             
-            boolean guard=false, center=false, forward=false;
-            String[] position = ((String)playerDetails.get("position")).split("-");
-            for (String pos : position){
-                switch(pos){
-                    case "G" -> guard=true;
-                    case "C" -> center=true;
-                    case "F" -> forward=true;
-                }
-            }
-            
+            String position = (String)playerDetails.get("position");
             double points = ((Number)playerStats.get("pts")).doubleValue();
             double rebound = ((Number)playerStats.get("reb")).doubleValue();
             double assists = ((Number)playerStats.get("ast")).doubleValue();
@@ -84,7 +81,11 @@ public class FreeAgentService {
             double salary = 1000 + (points*100);
             salary = Math.floor(salary*100)/100;
             
-            list.add(new Player((Long) playerDetails.get("id"), name, age, height, weight, guard, center, forward, salary,points,rebound,assists,steals,blocks,0,0));
+            list.add(new Player((Long) playerDetails.get("id"), name, age, height, weight, position, salary,points,rebound,assists,steals,blocks,0,0));
+        }
+        
+        for (Player player : playerService.findAllPlayers()){
+            list.removeIf(obj -> Objects.equals(obj.getId(), player.getId()));
         }
         
         return list;
