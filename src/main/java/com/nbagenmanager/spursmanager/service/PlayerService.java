@@ -5,6 +5,7 @@
 package com.nbagenmanager.spursmanager.service;
 
 import com.nbagenmanager.spursmanager.model.Player;
+import com.nbagenmanager.spursmanager.repo.InjuryReserveRepo;
 import com.nbagenmanager.spursmanager.repo.PlayerRepo;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlayerService {
     private final PlayerRepo playerRepo;
+    private final InjuryReserveRepo injuryReserveRepo;
 
     @Autowired
-    public PlayerService(PlayerRepo playerRepo) {
+    public PlayerService(PlayerRepo playerRepo, InjuryReserveRepo injuryReserveRepo) {
         this.playerRepo = playerRepo;
+        this.injuryReserveRepo = injuryReserveRepo;
     }
     
     public Player addPlayer(Player player){
@@ -143,6 +146,7 @@ public class PlayerService {
         if (!validatePosition(roster))
             throw new PositionalRequirementException("Removing the player will disobey the positional requirement.");
         playerRepo.deletePlayerById(id);
+        injuryReserveRepo.deleteInjuryReserveById(id);
     }
     
     public Integer getSize(){

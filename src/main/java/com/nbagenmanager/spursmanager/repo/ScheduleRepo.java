@@ -8,9 +8,7 @@ package com.nbagenmanager.spursmanager.repo;
  *
  * @author Ryan Chin
  */
-import com.nbagenmanager.spursmanager.model.Player;
 import com.nbagenmanager.spursmanager.model.Schedule;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScheduleRepo extends JpaRepository<Schedule, Integer>{
