@@ -28,7 +28,7 @@ public class ScheduleResource {
     
     @GetMapping("/shortestPath")
     public ResponseEntity<List<Schedule>> findShortestPath(){
-        List<Schedule> schedules = scheduleService.findShortestRoundTripPathDFS();
+        List<Schedule> schedules = scheduleService.findShortestPathDFS();
         return new ResponseEntity<>(schedules, HttpStatus.OK);
     }
     

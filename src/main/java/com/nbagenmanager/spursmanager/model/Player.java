@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Entity
 public class Player implements Serializable{
     @Id
-    private Long id;
+    private Long id; //Player ID and also primary key
     private String name;
     private int age;
     private double height;
@@ -32,7 +32,8 @@ public class Player implements Serializable{
     private int contractLength;
     
     public Player(){};
-
+    
+    //Player constructor
     public Player(Long id, String name, int age, double height, double weight, String position, double salary, double points, double rebound, double assists, double steals, double blocks, int matchesPlayed, int contractLength) {
         this.id = id;
         this.name = name;
@@ -50,8 +51,7 @@ public class Player implements Serializable{
         this.contractLength = contractLength;
     }
 
-   
-
+   //Create getters and setters
     public Long getId() {
         return id;
     }

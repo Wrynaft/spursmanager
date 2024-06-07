@@ -8,13 +8,16 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+//Main application to launch the app
 @SpringBootApplication
 public class SpursmanagerApplication {
-
+        
+        //Run the back-end app with SpringBoot
 	public static void main(String[] args) {
 		SpringApplication.run(SpursmanagerApplication.class, args);
 	}
         
+        //Code to adjust CorsFilters which causes problems for front-end web to show
         @Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();

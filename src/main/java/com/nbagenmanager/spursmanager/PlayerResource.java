@@ -24,26 +24,29 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Ryan Chin
  */
 @RestController
-@RequestMapping("/players")
+@RequestMapping("/players") //Endpoint for API access from front-end
 public class PlayerResource {
-    private final PlayerService playerService;
-
+    private final PlayerService playerService; //Player service class needed for operations related to Player
+    
     public PlayerResource(PlayerService playerService) {
         this.playerService = playerService;
     }
     
+    //Returns list of players in the roster
     @GetMapping("/all")
     public ResponseEntity<List<Player>> getAllPlayer(){
         List<Player> players = playerService.findAllPlayers();
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
     
+    //Finds a particular player by their ID
     @GetMapping("/find/{id}")
     public ResponseEntity<Player> getPlayerById(@PathVariable("id") Long id){
         Player player = playerService.findPlayerById(id);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
     
+    //Validate roster based on rules and requirements. Refer PlayerService class for details
     @GetMapping("/validate")
     public ResponseEntity<String> validateRoster(){
         if (playerService.validateRoster())
@@ -52,35 +55,41 @@ public class PlayerResource {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
     }
     
+    //Return size of roster
     @GetMapping("/size")
     public ResponseEntity<Integer> getSize(){
         Integer size = playerService.getSize();
         return new ResponseEntity<>(size, HttpStatus.OK);
     }
     
+    //Return total salary of roster
     @GetMapping("/salary")
     public ResponseEntity<Double> getSalary(){
         Double salary = playerService.getSalary();
         return new ResponseEntity<>(salary, HttpStatus.OK);
     }
     
+    //Add a new player into roster
     @PostMapping("/add")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player){
         Player newPlayer = playerService.addPlayer(player);
         return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
     }
     
+    //Search for player based on attributes passed from front end
     @PostMapping("/search")
     public ResponseEntity<List<Player>> searchPlayers(@RequestBody Map<String, String> searchParams){
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
     
+    //Update an existing player
     @PutMapping("/update")
     public ResponseEntity<Player> updatePlayer(@RequestBody Player player){
         Player updatePlayer = playerService.updatePlayer(player);
         return new ResponseEntity<>(updatePlayer, HttpStatus.CREATED);
     }
     
+    //Delete a player by their ID
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Player> deletePlayer(@PathVariable("id") Long id){
         playerService.deletePlayer(id);
