@@ -1,0 +1,40 @@
+<div class="px-4">
+    <h1>Player Performance Ranking</h1>
+    <p>Below are the ranking of players based off their performance and their positions!</p>
+</div>
+<div class="px-5">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="width: 10%">Rank</th>
+            <th scope="col" style="width: 20%">Image</th>
+            <th scope="col" style="width: 70%">Player</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let player of players">
+            <th scope="row"  class="align-middle">
+                {{players.indexOf(player)+1}}
+            </th>
+            <td><div class="flex-shrink-0">
+                <img src="assets/{{player?.name}}.png"
+                  alt="assets/default.png" class="img-fluid" style="width: 270px;  border-radius: 10px;" onerror="this.onerror=null;this.src=this.alt;">
+              </div>
+            </td>
+            <td  class="align-middle"> 
+                <div class="grid">
+                    <div class="row">
+                        Name: {{player.name}}
+                    </div>
+                    <div class="row">
+                        Position: {{player.position}}
+                    </div>
+                    <div class="row">
+                        Composite Score: {{player.compScore.toFixed(2)}}
+                    </div>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+<div class="px-4">
+    <h1>Injury Reserve</h1>
+    <p>The player to recover first is the player at the topmost of this list (stack)</p>
+</div>
+<div class="d-grid gap-2 d-sm-flex px-4">
+    <button *ngIf="injuryReserve.length" type="button" (click)="popInjured()" class="btn btn-primary btn-lg px-4 gap-3 mb-3">Recover a player</button>
+</div>
+
+<section *ngIf="injuryReserve.length" class="w-100 px-4 py-5" style="background-color: #9de2ff; border-radius: .5rem .5rem 0 0;">
+    <div *ngFor="let injured of injuryReserve"  class="row d-flex justify-content-center gy-5">
+      <div class="col col-md-9 col-lg-7 col-xl-6">
+        <div class="card mb-4" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="assets/{{injured?.name}}.png"
+                  alt="assets/default.png" class="img-fluid" style="width: 270px;  border-radius: 10px;" onerror="this.onerror=null;this.src=this.alt;">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="mb-1">{{injured?.name}}</h5>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                    Status: Recuperating in injury reserve
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<div class="px-4">
+  <p>Want to add injured players? Head to "Roster" to add players that are injured.</p>
+</div>
+
+<!-- Display if empty stack -->
+<div *ngIf="!injuryReserve.length" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">NO INJURIES!</h4>
+      <p>No players are injured for now. Yippee!</p>
+    </div>
+</div>

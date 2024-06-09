@@ -1,0 +1,232 @@
+<div class="px-4">
+  <h1>Roster ({{size}})</h1>
+  <p>Total Salary: {{salary?.toFixed(2)}}</p>
+</div>
+<p class="px-4">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Advanced Search
+  </button>
+</p>
+<div class="collapse px-4 py-3" id="collapseExample">
+  <form #searchForm="ngForm" (ngSubmit)="onSearchAgent(searchForm)" class="d-flex flex-row align-items-center flex-wrap my-2 my-lg-0 gy-2">
+    <label for="nameSearch">Name</label>
+    <input class="form-control mr-sm-2" ngModel name="name" id="nameSearch" type="search" placeholder="Search" aria-label="Search">
+    <div class="d-flex flex-row align-items-center flex-wrap g-3 mt-1 mb-2">
+      <div class="row">
+      <div class="col-1" id="ageFilter"> 
+        <label for="ageFilter">Age</label>
+        <select class="form-select" ngModel name="ageFilter">
+          <option value=""></option>
+          <option value=">=">>=</option>
+          <option value="==">==</option>
+          <option value="<="><=</option>
+        </select>
+      </div>
+      <div class="col-1 me-md-5">
+          <input type="number" ngModel name="age" class="form-control mt-4">
+      </div>
+      <div class="col-1" id="heightFilter"> 
+        <label for="heightFilter">Height</label>
+        <select class="form-select" ngModel name="heightFilter">
+          <option value=""></option>
+          <option value=">=">>=</option>
+          <option value="==">==</option>
+          <option value="<="><=</option>
+        </select>
+    </div>
+    <div class="col-1 me-lg-5">
+        <input type="number" value="null" ngModel name="height" class="form-control mt-4">
+    </div>
+    <div class="col-1" id="weightFilter"> 
+      <label for="weightFilter">Weight</label>
+      <select class="form-select" ngModel name="weightFilter">
+        <option value=""></option>
+        <option value=">=">>=</option>
+        <option value="==">==</option>
+        <option value="<="><=</option>
+      </select>
+  </div>
+  <div class="col-1 me-lg-5 ">
+      <input type="number" class="form-control mt-4" ngModel name="weight">
+  </div>
+  <div class="col-1 me-lg-5" id="posFilter"> 
+    <label for="posFilter">Position</label>
+    <select class="form-select" ngModel name="posFilter">
+      <option value=""></option>
+      <option value="C">C</option>
+      <option value="F">F</option>
+      <option value="G">G</option>
+    </select>
+</div>
+<div class="col-1" id="salaryFilter"> 
+  <label for="salaryFilter">Salary</label>
+  <select class="form-select" ngModel name="salaryFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="salary">
+</div>
+</div>
+<div class="row">
+<div class="col-1" id="pointsFilter"> 
+  <label for="pointsFilter">Points</label>
+  <select class="form-select" ngModel name="pointsFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="points">
+</div>
+<div class="col-1" id="rbFilter"> 
+  <label for="rbFilter">Rebounds</label>
+  <select class="form-select" ngModel name="rbFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="rebounds">
+</div>
+<div class="col-1" id="astFilter"> 
+  <label for="astFilter">Assists</label>
+  <select class="form-select" ngModel name="astFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="assists">
+</div>
+<div class="col-1" id="stlFilter"> 
+  <label for="stlFilter">Steals</label>
+  <select class="form-select" ngModel name="stlFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="steals">
+</div>
+<div class="col-1" id="blkFilter"> 
+  <label for="weightFilter">Blocks</label>
+  <select class="form-select" ngModel name="blkFilter">
+    <option value=""></option>
+    <option value=">=">>=</option>
+    <option value="==">==</option>
+    <option value="<="><=</option>
+  </select>
+</div>
+<div class="col-1 me-lg-5 ">
+  <input type="number" class="form-control mt-4" ngModel name="blocks">
+</div>
+</div>
+</div>
+<div class="d-flex pt-1">
+  <button [disabled]="searchForm.invalid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  <button type="button" (click)="searchForm.reset(); searchedagents=freeagents" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary mx-4 me-1 flex-grow-1">Clear Search</button>
+</div>
+
+</form>
+</div>
+
+<section class="w-100 px-4 py-5" style="background-color: #9de2ff; border-radius: .5rem .5rem 0 0;">
+    <div class="row d-flex justify-content-center gy-5">
+        <div *ngIf="!freeagents.length" class="spinner-border text-primary" role="status">
+          <span class="sr-only"></span>
+        </div>
+      <div *ngFor="let freeagent of searchedagents" class="col col-md-9 col-lg-7 col-xl-6">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <img src="assets/{{freeagent?.name}}.png"
+                  alt="assets/default.png" class="img-fluid" style="width: 270px;  border-radius: 10px;" onerror="this.onerror=null;this.src=this.alt;">
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="mb-1">{{freeagent?.name}}</h5>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                    <div>
+                      <p class="small text-muted mb-1">Age</p>
+                      <p class="mb-0">{{freeagent?.age}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Height</p>
+                      <p class="mb-0">{{freeagent?.height}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Weight</p>
+                      <p class="mb-0">{{freeagent?.weight}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Position</p>
+                      <p class="mb-0">{{freeagent?.position}}</p>
+                    </div>
+                    <div class="px-3">
+                      <p class="small text-muted mb-1">Salary</p>
+                      <p class="mb-0">{{freeagent?.salary}}</p>
+                    </div>
+                  </div>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-body-tertiary">
+                  <div>
+                    <p class="small text-muted mb-1">Points</p>
+                    <p class="mb-0">{{freeagent?.points}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Rebounds</p>
+                    <p class="mb-0">{{freeagent?.rebound}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Assists</p>
+                    <p class="mb-0">{{freeagent?.assists}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Steals</p>
+                    <p class="mb-0">{{freeagent?.steals}}</p>
+                  </div>
+                  <div class="px-3">
+                    <p class="small text-muted mb-1">Blocks</p>
+                    <p class="mb-0">{{freeagent?.blocks}}</p>
+                  </div>
+                </div>
+                <div class="d-flex pt-1">
+                  <button  type="button" (click)="tryAddPlayer(freeagent)" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary flex-grow-1" data-bs-toggle="modal" data-bs-target="#addModal">Recruit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Remove Player</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to add this player?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="closeModalButton" data-bs-dismiss="modal">No</button>
+        <button type="button" (click)="onAddPlayer();" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
