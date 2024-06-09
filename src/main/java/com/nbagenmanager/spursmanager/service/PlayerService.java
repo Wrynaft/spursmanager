@@ -25,12 +25,14 @@ public class PlayerService {
     private final PlayerRepo playerRepo;
     private final InjuryReserveRepo injuryReserveRepo;
     private final FilterPlayerService filterPlayerService;
+    private final RankingService rankingService;
 
     @Autowired
-    public PlayerService(PlayerRepo playerRepo, InjuryReserveRepo injuryReserveRepo, FilterPlayerService filterPlayerService) {
+    public PlayerService(PlayerRepo playerRepo, InjuryReserveRepo injuryReserveRepo, FilterPlayerService filterPlayerService, RankingService rankingService) {
         this.playerRepo = playerRepo;
         this.injuryReserveRepo = injuryReserveRepo;
         this.filterPlayerService = filterPlayerService;
+        this.rankingService = rankingService;
     }
     
     //Function to add player

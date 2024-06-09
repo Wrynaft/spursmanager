@@ -7,6 +7,8 @@ package com.nbagenmanager.spursmanager;
 import com.nbagenmanager.spursmanager.model.Player;
 import com.nbagenmanager.spursmanager.service.InvalidSearchParameterException;
 import com.nbagenmanager.spursmanager.service.PlayerService;
+import com.nbagenmanager.spursmanager.service.RankingService;
+
 import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -28,9 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/players") //Endpoint for API access from front-end
 public class PlayerResource {
     private final PlayerService playerService; //Player service class needed for operations related to Player
+    private final RankingService rankingService; //Ranking service class needed for operations related to Ranking
     
-    public PlayerResource(PlayerService playerService) {
+    public PlayerResource(PlayerService playerService, RankingService rankingService) {
         this.playerService = playerService;
+        this.rankingService = rankingService;
     }
     
     //Returns list of players in the roster
@@ -83,6 +87,13 @@ public class PlayerResource {
         } catch (InvalidSearchParameterException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/ranking")
+    public ResponseEntity<List<Player>> getRankedPlayers() {
+        List<Player> players = playerService.findAllPlayers();
+        List<Player> rankedPlayers = rankingService.rankPlayers(players);
+        return new ResponseEntity<>(rankedPlayers, HttpStatus.OK);
     }
 
     //Add a new player into roster
