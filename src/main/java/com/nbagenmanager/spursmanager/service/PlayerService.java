@@ -24,11 +24,13 @@ import org.springframework.stereotype.Service;
 public class PlayerService {
     private final PlayerRepo playerRepo;
     private final InjuryReserveRepo injuryReserveRepo;
+    private final FilterPlayerService filterPlayerService;
 
     @Autowired
-    public PlayerService(PlayerRepo playerRepo, InjuryReserveRepo injuryReserveRepo) {
+    public PlayerService(PlayerRepo playerRepo, InjuryReserveRepo injuryReserveRepo, FilterPlayerService filterPlayerService) {
         this.playerRepo = playerRepo;
         this.injuryReserveRepo = injuryReserveRepo;
+        this.filterPlayerService = filterPlayerService;
     }
     
     //Function to add player
@@ -192,9 +194,49 @@ public class PlayerService {
         return totalSalary;
     }
     
-    //John please do your part here
-    public List<Player> searchPlayers(Map<String, String> searchParams){
+    //John's Dynamic Searching done!
+    public List<Player> searchPlayers(Map<String, String> searchParams) {
         List<Player> roster = playerRepo.findAll();
-        return null;
+        List<Player> filteredPlayers = new ArrayList<>();
+
+        // Loop through the search parameters, and filter by each parameter
+        for (Map.Entry<String, String> entry : searchParams.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            // Assuming the search parameter format is "attribute:comparator:value"
+            String[] parts = value.split(":");
+            if (parts.length != 2) {
+                throw new InvalidSearchParameterException("Invalid search parameter format for attribute: " + key);
+            }   
+
+            String attribute = key;
+            String comparator = parts[0];
+            Object searchValue = convertToType(parts[1], attribute);
+            if (searchValue == null) {
+                throw new InvalidSearchParameterException("Invalid search parameter value for attribute: " + attribute);
+            }
+
+            filteredPlayers = filterPlayerService.filterPlayers(roster, attribute, comparator, searchValue);
+            roster = filteredPlayers;
+        }
+
+        // Update the filtered rosters for next loop
+        return filteredPlayers;
+    }
+
+    private Object convertToType(String value, String attribute) {
+        switch (attribute) {
+            case "height":
+            case "weight":
+                return Double.parseDouble(value);
+            case "age":
+                return Integer.parseInt(value);
+            case "position":
+                return value;
+            // Add more cases for other attributes as needed
+            default:
+                return null;
+        }
     }
 }

@@ -5,6 +5,7 @@
 package com.nbagenmanager.spursmanager;
 
 import com.nbagenmanager.spursmanager.model.Player;
+import com.nbagenmanager.spursmanager.service.InvalidSearchParameterException;
 import com.nbagenmanager.spursmanager.service.PlayerService;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,21 @@ public class PlayerResource {
         return new ResponseEntity<>(salary, HttpStatus.OK);
     }
     
+    @GetMapping("/search")
+    public ResponseEntity<List<Player>> searchPlayers(@RequestBody Map<String, String> searchParams) {
+        try {
+            List<Player> filteredPlayers = playerService.searchPlayers(searchParams);
+
+            if (filteredPlayers.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(filteredPlayers, HttpStatus.OK);
+        } catch (InvalidSearchParameterException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     //Add a new player into roster
     @PostMapping("/add")
     public ResponseEntity<Player> addPlayer(@RequestBody Player player){
@@ -77,10 +93,12 @@ public class PlayerResource {
     }
     
     //Search for player based on attributes passed from front end
-    @PostMapping("/search")
-    public ResponseEntity<List<Player>> searchPlayers(@RequestBody Map<String, String> searchParams){
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
+    // @PostMapping("/search")
+    // public ResponseEntity<List<Player>> searchPlayers(@RequestBody Map<String, String> searchParams){
+    //     return new ResponseEntity<>(null, HttpStatus.OK);
+    // }
+
+
     
     //Update an existing player
     @PutMapping("/update")
