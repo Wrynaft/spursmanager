@@ -5,6 +5,7 @@
 package com.nbagenmanager.spursmanager;
 
 import com.nbagenmanager.spursmanager.model.Player;
+import com.nbagenmanager.spursmanager.model.PlayerRanking;
 import com.nbagenmanager.spursmanager.service.InvalidSearchParameterException;
 import com.nbagenmanager.spursmanager.service.PlayerService;
 import com.nbagenmanager.spursmanager.service.RankingService;
@@ -90,9 +91,9 @@ public class PlayerResource {
     }
 
     @GetMapping("/ranking")
-    public ResponseEntity<List<Player>> getRankedPlayers() {
+    public ResponseEntity<List<PlayerRanking>> getRankedPlayers() {
         List<Player> players = playerService.findAllPlayers();
-        List<Player> rankedPlayers = rankingService.rankPlayers(players);
+        List<PlayerRanking> rankedPlayers = rankingService.rankPlayers(players);
         return new ResponseEntity<>(rankedPlayers, HttpStatus.OK);
     }
 

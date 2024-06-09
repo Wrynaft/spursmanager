@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.nbagenmanager.spursmanager.model.Player;
+import com.nbagenmanager.spursmanager.model.PlayerRanking;
 
 @Service
 public class RankingService {
@@ -49,9 +50,15 @@ public class RankingService {
         return compositeScore;
     }
 
-    public List<Player> rankPlayers(List<Player> players) {
-        List<Player> rankedPlayers = new ArrayList<>(players);
-        rankedPlayers.sort((p1, p2) -> Double.compare(calculateCompositeScore(p2), calculateCompositeScore(p1)));
+    public List<PlayerRanking> rankPlayers(List<Player> players) {
+        List<PlayerRanking> rankedPlayers = new ArrayList<>();
+
+        for (Player player : players) {
+            double compositeScore = calculateCompositeScore(player);
+            rankedPlayers.add(new PlayerRanking(player, compositeScore));
+        }
+
+        rankedPlayers.sort((p1, p2) -> Double.compare(p2.getCompositeScore(), p1.getCompositeScore()));
         return rankedPlayers;
     }
 }
