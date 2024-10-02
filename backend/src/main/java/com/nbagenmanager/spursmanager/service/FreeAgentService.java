@@ -42,7 +42,7 @@ public class FreeAgentService {
         List<Player> list = new ArrayList<>();
         //Connect to external API
         HttpHeaders header = new HttpHeaders();
-        header.set("Authorization", "6a3181ee-21fa-4e29-8d0c-5655e5fd0f3b"); //Authorization key to access API
+        header.set("Authorization", "ENTER AUTH KEY HERE"); //Authorization key to access API
         HttpEntity<Void> requestEntity = new HttpEntity<>(header);
         JSONParser parser = new JSONParser();
         
